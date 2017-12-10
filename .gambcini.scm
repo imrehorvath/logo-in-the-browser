@@ -1,0 +1,6 @@
+(load "simply.scm")
+(include "/obj.scm")
+(load "logo.scm")
+(load "logo-meta.scm")
+(display "Press ENTER to begin") (force-output)
+(initialize-logo)

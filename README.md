@@ -6,3 +6,6 @@ This project is based on Marc Feeley's [gambit-in-emacs-in-the-browser](https://
 My original project targeted for non-browser environment, can be found on GitHub as well. See: [CS61A/Logo](https://github.com/imrehorvath/CS61A/tree/master/Logo)
 
 To run it in your browser, click: [https://imrehorvath.github.io/logo-in-the-browser/](https://imrehorvath.github.io/logo-in-the-browser/)
+
+Example usage:
+![Screenshot](https://github.com/imrehorvath/logo-in-the-browser/raw/gh-pages/example.png "Logo example interaction")
