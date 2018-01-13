@@ -164,9 +164,7 @@
 		   (let ((arg-count (if def-no-args
 					def-no-args
 					(compute-arg-count formals))))
-		     (set! the-procedures
-			   (cons (list name 'compound arg-count (cons formals body))
-				 the-procedures))
+		     (add-compound name arg-count formals body)
 		     '=no-value=))))))))
 
 
@@ -201,9 +199,7 @@
 	       (let ((formals (collect-formals)))
 		 (let ((arg-count (length formals)))
 		   (let ((body (collect-body)))
-		     (set! the-macros
-			   (cons (list name 'macro arg-count (cons formals body))
-				 the-macros))
+		     (add-macro name arg-count formals body)
 		     '=no-value=))))))))
 
 
@@ -464,8 +460,7 @@
   (eval-helper #f))
 
 (define (macro-call? token)
-  (let ((macro (lookup-macro token)))
-    macro))
+  (lookup-macro token))
 
 (define (handle-macro macro arguments env)
   (let ((macro-output (eval-sequence
@@ -538,7 +533,32 @@
 ;;; procedures
 
 (define (lookup-procedure name)
-  (assoc name the-procedures))
+  (let ((proc (assoc name the-procedures)))
+    (if proc
+	proc
+	(let ((lib-name (string-append "logolib/procedures/"
+				       (if (symbol? name)
+					   (symbol->string name)
+					   name))))
+	  (cond ((file-exists? lib-name)
+		 (meta-load lib-name)
+		 (let ((lproc (assoc name the-procedures)))
+		   (if lproc
+		       lproc
+		       (logo-error "Library does not contain definition" name))))
+		(else #f))))))
+
+(define (add-compound name arg-count formals body)
+  (define (delete name procs)
+    (cond ((null? procs) '())
+	  ((eq? name (caar procs)) (cdr procs))
+	  (else (cons (car procs) (delete name (cdr procs))))))
+  (if (assoc name the-procedures)
+      (set! the-procedures
+	    (delete name the-procedures)))
+  (set! the-procedures
+	(cons (list name 'compound arg-count (cons formals body))
+	      the-procedures)))
 
 (define (procedure-name p)
   (car p))
@@ -565,7 +585,32 @@
   (equal? exp ".macro"))
 
 (define (lookup-macro name)
-  (assoc name the-macros))
+  (let ((macro (assoc name the-macros)))
+    (if macro
+	macro
+	(let ((lib-name (string-append "logolib/macros/"
+				       (if (symbol? name)
+					   (symbol->string name)
+					   name))))
+	  (cond ((file-exists? lib-name)
+		 (meta-load lib-name)
+		 (let ((lmacro (assoc name the-macros)))
+		   (if lmacro
+		       lmacro
+		       (logo-error "Library does not contain macro definition" name))))
+		(else #f))))))
+
+(define (add-macro name arg-count formals body)
+  (define (delete name macros)
+    (cond ((null? macros) '())
+	  ((eq? name (caar macros)) (cdr macros))
+	  (else (cons (car macros) (delete name (cdr macros))))))
+  (if (assoc name the-macros)
+      (set! the-macros
+	    (delete name the-macros)))
+  (set! the-macros
+	(cons (list name 'macro arg-count (cons formals body))
+	      the-macros)))
 
 (define (macro-name macro)
   (car macro))

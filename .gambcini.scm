@@ -2,5 +2,6 @@
 (include "/obj.scm")
 (load "logo.scm")
 (load "logo-meta.scm")
-(display "Welcome to an experimental version of the logo-in-the-browser project.\nThis is a UCB Logoish logo interpeter ephasizing symbolic computation.\n2017, Imre Horvath\nYou can load sources by issuing: load \"file\n")
+(display "UCB Logo\"-ish\" Logo interpeter\nv 0.1 2017, Imre Horvath")
+(newline)
 (initialize-logo)
