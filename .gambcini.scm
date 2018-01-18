@@ -1,5 +1,6 @@
 (load "simply.scm")
 (include "/obj.scm")
+(load "tables.scm")
 (load "logo.scm")
 (load "logo-meta.scm")
 (display "UCB Logo\"-ish\" Logo interpeter\nv 0.1 2017, Imre Horvath")
