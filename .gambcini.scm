@@ -3,6 +3,6 @@
 (load "tables.scm")
 (load "logo.scm")
 (load "logo-meta.scm")
-(display "UCB Logo\"-ish\" Logo interpeter\nv 0.1 2017, Imre Horvath")
+(display "UCB Logo\"-ish\" Logo interpeter\nv0.2 2018, imi [dot] horvath [at] gmail [dot] com")
 (newline)
 (initialize-logo)
