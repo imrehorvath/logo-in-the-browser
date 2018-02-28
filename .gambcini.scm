@@ -3,6 +3,6 @@
 (load "tables.scm")
 (load "logo.scm")
 (load "logo-meta.scm")
-(display ";; Logo interpeter implementing a subset of UCBLogo, minus the turtle graphics.\n;; v0.3 2018, imi [dot] horvath [at] gmail [dot] com\n;; Original project: https://github.com/imrehorvath/CS61A/tree/master/Logo")
+(display ";; Logo interpeter implementing a subset of UCBLogo, minus the turtle graphics.\n;; v0.3 2018, imi [dot] horvath [at] gmail [dot] com\n;; Original project: https://github.com/imrehorvath/CS61A/tree/master/Logo\n;; Ymacs key bindings hint: C-S-y Paste from clipboard, M-S-w Copy for clipboard, C-x C-f find file")
 (newline)
 (initialize-logo)
