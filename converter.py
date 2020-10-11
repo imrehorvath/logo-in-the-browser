@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
-import sys
-
-def reader(filename):
+def by_bytes(filename):
     with open(filename) as f:
         while True:
-            char = f.read(1)
-            if char:
-                yield char
-            else:
+            c = f.read(1)
+            if not c:
                 return
+            yield c
 
-print([ord(x) for x in reader(sys.argv[1])])
+if __name__ == "__main__":
+    import sys
+    print([ord(x) for x in by_bytes(sys.argv[1])])
