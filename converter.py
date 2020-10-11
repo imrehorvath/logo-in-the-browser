@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def by_bytes(filename):
+def chars(filename):
     with open(filename) as f:
         while True:
             c = f.read(1)
@@ -10,4 +10,4 @@ def by_bytes(filename):
 
 if __name__ == "__main__":
     import sys
-    print([ord(x) for x in by_bytes(sys.argv[1])])
+    print([ord(x) for x in chars(sys.argv[1])])
