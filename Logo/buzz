@@ -4,7 +4,7 @@
 
 to buzz :number
 if equalp remainder :number 7 0 [print "BUZZ stop]
-if memberp :number 7 [print "BUZZ stop]
+if memberp 7 :number [print "BUZZ stop]
 print :number
 end
 
