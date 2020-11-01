@@ -1,0 +1,5 @@
+;; Compute averages of arbitrary number of number arguments
+;; The default number of arguments is 2
+to average [:numbers] 2
+op quotient apply "sum :numbers count :numbers
+end
