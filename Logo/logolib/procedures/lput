@@ -1,3 +1,4 @@
+;; -*- logo -*-
 to lput :datum :list
 output append :list (list :datum)
 end

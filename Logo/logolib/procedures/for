@@ -1,3 +1,4 @@
+;; -*- logo -*-
 to for :values :instr
 localmake "var first :values
 local :var

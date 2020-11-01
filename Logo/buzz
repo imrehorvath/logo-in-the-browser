@@ -1,4 +1,4 @@
-;; The Buzz Game
+;; The Buzz Game -*- logo -*-
 ;; Say Buzz when the number is a multiple of 7 or contains the digit 7.
 ;; Say the number itself otherwise.
 

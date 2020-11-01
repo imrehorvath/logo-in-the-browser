@@ -1,3 +1,4 @@
+;; -*- logo -*-
 to #
 output :template.number
 end

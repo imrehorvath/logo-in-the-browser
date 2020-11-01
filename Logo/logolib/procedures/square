@@ -1,0 +1,4 @@
+;; -*- logo -*-
+to square :x
+op product :x :x
+end
