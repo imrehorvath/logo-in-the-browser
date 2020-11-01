@@ -363,7 +363,7 @@ function withSchemeBuffer(cont, prevent_split) {
     done(buf);
   else
     createShellBuffer(name, "##repl-debug-main", function (buf) {
-      buf.cmd("scheme_mode");
+      //buf.cmd("scheme_mode");
     }, done);
 }
 
