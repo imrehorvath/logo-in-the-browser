@@ -1,0 +1,4 @@
+;; -*- logo -*-
+to choose :n :k
+output quotient fact :n product fact :k fact difference :n :k
+end
