@@ -1,0 +1,4 @@
+;; -*- logo -*-
+to divisiblep :n :m
+output zerop remainder :n :m
+end

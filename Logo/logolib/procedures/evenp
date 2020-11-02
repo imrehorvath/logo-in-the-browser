@@ -1,0 +1,4 @@
+;; -*- logo -*-
+to evenp :n
+output divisiblep :n 2
+end

@@ -1,0 +1,4 @@
+;; -*- logo -*-
+to oddp :n
+output not evenp :n
+end
