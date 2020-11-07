@@ -6,5 +6,7 @@ def by_chars(filename):
             yield c
 
 if __name__ == "__main__":
-    import sys
-    print([ord(c) for c in by_chars(sys.argv[1])])
+    import sys, os, re
+    path, filename = os.path.split(sys.argv[1])
+    location = re.sub(r'^Logo', '', path) + os.path.sep
+    print("Module['FS_createDataFile']('{}', '{}', {}, true, true);".format(location, filename, [ord(c) for c in by_chars(sys.argv[1])]))
