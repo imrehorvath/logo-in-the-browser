@@ -79,13 +79,21 @@
 ;; Eval procedure definitions with required and optional inputs
 
 (define (eval-definition line-obj)
-  (define def-no-args #f)
+  (define def-number-of-args #f)
+  (define required-args-defined #f)
+  (define optional-args-defined #f)
+  (define rest-args-defined #f)
+  (define (only-rest-args-defined?)
+    (and (not required-args-defined)
+	 (not optional-args-defined)
+	 rest-args-defined))
   (define (collect-formals)
     (define (collect-required)
       (if (ask line-obj 'empty?)
 	  '()
 	  (let ((formal (ask line-obj 'next)))
 	    (cond ((variable? formal)
+		   (set! required-args-defined #t)
 		   (cons (variable-name formal)
 			 (collect-required)))
 		  ((list? formal)
@@ -100,6 +108,7 @@
 			(not (null? formal))
 			(variable? (car formal))
 			(> (length formal) 1))
+		   (set! optional-args-defined #t)
 		   (cons (cons (variable-name (car formal))
 			       (cdr formal))
 			 (collect-optional)))
@@ -112,22 +121,26 @@
       (let ((formal (ask line-obj 'next)))
 	(cond ((number? formal)
 	       (ask line-obj 'put-back formal)
-	       (collect-def-no-args))
+	       (collect-def-number-of-args))
 	      ((and (list? formal)
 		    (not (null? formal))
 		    (variable? (car formal))
 		    (null? (cdr formal)))
+	       (set! rest-args-defined #t)
 	       (cons (list (variable-name (car formal)))
-		     (collect-def-no-args)))
+		     (collect-def-number-of-args)))
 	      (logo-error "Invalid input to procedure" formal))))
-    (define (collect-def-no-args)
+    (define (collect-def-number-of-args)
       (if (ask line-obj 'empty?)
 	  '()
 	  (let ((formal (ask line-obj 'next)))
 	    (cond ((not (ask line-obj 'empty?))
 		   (logo-error "Invalid input to procedure after" formal))
 		  ((number? formal)
-		   (set! def-no-args formal)
+		   (set! def-number-of-args (if (and (only-rest-args-defined?)
+						     (not (negative? formal)))
+						(* -1 formal)
+						formal))
 		   '())
 		  (else (logo-error "Invalid input to procedure" formal))))))
     (collect-required))
@@ -162,8 +175,8 @@
 	      (else
 	       (let ((formals (collect-formals)))
 		 (let ((body (collect-body)))
-		   (let ((arg-count (if def-no-args
-					def-no-args
+		   (let ((arg-count (if def-number-of-args
+					def-number-of-args
 					(compute-arg-count formals))))
 		     (add-compound name arg-count formals body)
 		     '=no-value=))))))))
@@ -440,17 +453,16 @@
 	     (let ((proc (lookup-procedure token)))
 	       (if (not proc)
 		   (logo-error "I don't know how  to" token)
-		   
-		   ;; +------------------+------------------------+----------------+------------------------+----------------+
-		   ;; |                  |           (2)          |      (-2)      |            2           |       -2       |
-		   ;; +------------------+------------------------+----------------+------------------------+----------------+
-		   ;; | PROC "A "B       | cons env,              | cons env,      | collect 2              | collect abs -2 |
-		   ;; |                  | collect 2              | collect abs -2 |                        |                |
-		   ;; +------------------+------------------------+----------------+------------------------+----------------+
-		   ;; | (PROC "A "B ...) | cons env,              | cons env,      | collect any, must be 2 | collect, any   |
-		   ;; |                  | collect any, must be 2 | collect any    |                        |                |
-		   ;; +------------------+------------------------+----------------+------------------------+----------------+
-
+		   ;; +------------------+--------------+----------------+--------------+----------------+
+		   ;; |                  |      (2)     |      (-2)      |       2      |       -2       |
+		   ;; +------------------+--------------+----------------+--------------+----------------+
+		   ;; | PROC "A "B       | cons env,    | cons env,      | collect 2    | collect abs -2 |
+		   ;; |                  | collect 2    | collect abs -2 |              |                |
+		   ;; +------------------+--------------+----------------+--------------+----------------+
+		   ;; | (PROC "A "B ...) | cons env,    | cons env,      | collect any, | collect, any   |
+		   ;; |                  | collect any, | collect any    |    must be 2 |                |
+		   ;; |                  |    must be 2 |                |              |                |
+		   ;; +------------------+--------------+----------------+--------------+----------------+
 		   (cond ((pair? (arg-count proc))
 			  (cond ((negative? (car (arg-count proc)))
 				 (if (not paren-flag)
