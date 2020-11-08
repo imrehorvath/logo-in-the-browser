@@ -21,7 +21,7 @@ end
 ;; Functions of streams
 
 to stream.ref :stream :num
-if zerop :num [output stream.head :stream]
+if equalp :num 1 [output stream.head :stream]
 output stream.ref stream.tail :stream :num-1
 end
 
