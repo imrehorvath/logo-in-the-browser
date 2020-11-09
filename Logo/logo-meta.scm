@@ -129,8 +129,7 @@
 	    (cond ((not (ask line-obj 'empty?))
 		   (logo-error "Invalid input to procedure after" formal))
 		  ((number? formal)
-		   (set! def-number-of-args (if (and rest-args-defined
-						     (not (negative? formal)))
+		   (set! def-number-of-args (if rest-args-defined
 						(* -1 formal)
 						formal))
 		   '())
