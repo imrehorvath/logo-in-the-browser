@@ -487,7 +487,7 @@
 				       (if (= (length collected-args)
 					      (car (arg-count proc)))
 					   (logo-apply proc (cons env collected-args) env)
-					   (logo-error "Number of arguments differs from defined" (car (arg-count proc)))))))))
+					   (logo-error "Wrong number of arguments, should be:" (car (arg-count proc)))))))))
 			 (else
 			  (cond ((negative? (arg-count proc))
 				 (if (not paren-flag)
@@ -518,7 +518,7 @@
 				       (if (= (length collected-args)
 					      (arg-count proc))
 					   (logo-apply proc collected-args env)
-					   (logo-error "Number of arguments differs from defined" (arg-count proc)))))))))))) )))
+					   (logo-error "Wrong number of arguments, should be:" (arg-count proc)))))))))))) )))
   
   (eval-helper #f))
 
