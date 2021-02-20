@@ -1,0 +1,3 @@
+[submodule "CS61A"]
+	path = CS61A
+	url = https://github.com/imrehorvath/CS61A
