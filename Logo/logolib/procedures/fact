@@ -1,6 +1,0 @@
-;; -*- logo -*-
-
-to fact :n [:sofar 1]
-if zerop :n [output :sofar]
-output (fact :n-1 :sofar*:n)
-end

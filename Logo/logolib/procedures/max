@@ -1,5 +1,0 @@
-;; -*- logo -*-
-
-to max :a :b
-op ifelse :a > :b [:a] [:b]
-end

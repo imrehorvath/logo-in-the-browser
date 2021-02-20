@@ -1,8 +1,0 @@
-;; -*- logo -*-
-
-to map.tree :template :tree
-if wordp :tree [output apply :template (list :tree)]
-if emptyp :tree [output []]
-output fput (map.tree :template first :tree) ~
-            (map.tree :template bf :tree)
-end

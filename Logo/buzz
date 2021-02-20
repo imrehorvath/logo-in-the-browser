@@ -1,7 +1,0 @@
-;; -*- logo -*-
-
-to buzz :number
-if divisiblep :number 7 [print "buzz stop]
-if memberp 7 :number [print "buzz stop]
-print :number
-end

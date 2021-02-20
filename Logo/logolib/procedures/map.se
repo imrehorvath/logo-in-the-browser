@@ -1,7 +1,0 @@
-;; -*- logo -*-
-
-to map.se :template :values [:template.number 1]
-if emptyp :values [output []]
-output sentence (apply :template (list first :values)) ~
-                (map.se :template butfirst :values :template.number+1)
-end

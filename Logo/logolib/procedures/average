@@ -1,5 +1,0 @@
-;; -*- logo -*-
-
-to average [:numbers] 2
-output quotient apply "sum :numbers count :numbers
-end

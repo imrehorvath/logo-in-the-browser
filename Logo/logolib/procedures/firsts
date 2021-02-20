@@ -1,5 +1,0 @@
-;; -*- logo -*-
-
-to firsts :list.of.lists
-output map "first :list.of.lists
-end
